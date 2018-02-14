@@ -14,9 +14,9 @@ public class PlayerInputs : MonoBehaviour {
 
     ControllerType Controller;
 
-    public PlayerInputs(int playerID){
+    public void InitializePlayerInputs(int playerID){
         ControllerID = playerID;
-        if (playerID == 0) //TODO: ATM assume that player 0 play on keyboard
+        if (ControllerID == 0) //TODO: ATM assume that player 0 play on keyboard
             Controller = ControllerType.Keyboard;
         else
         {
@@ -33,8 +33,8 @@ public class PlayerInputs : MonoBehaviour {
     }
 
     void GetKeyboadInputs(){
-		HorizontalAxisEvent(Input.GetAxis("Horizontal"));
-		VerticalAxisEvent(Input.GetAxis("Vertical"));
+		HorizontalAxisEvent(Input.GetAxis("XAxisKeyboard"));
+		VerticalAxisEvent(Input.GetAxis("YAxisKeyboard"));
 		if (Input.GetKeyDown(KeyCode.LeftShift))
 			RunEvent(true);
 		if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -42,6 +42,11 @@ public class PlayerInputs : MonoBehaviour {
     }
 
     void GetPadInputs(){
-        
+        HorizontalAxisEvent(Input.GetAxis("XAxisPad" + ControllerID));
+        VerticalAxisEvent(Input.GetAxis("YAxisPad" + ControllerID));
+		if (Input.GetKeyDown(KeyCode.LeftShift))
+			RunEvent(true);
+		if (Input.GetKeyUp(KeyCode.LeftShift))
+			RunEvent(false);
     }
 }

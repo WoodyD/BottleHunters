@@ -23,6 +23,7 @@ public class PlayerController : Person {
 		newRotation = transform.rotation.y;
 
         inputs = gameObject.AddComponent<PlayerInputs>();
+        inputs.InitializePlayerInputs(PlayerStats.playerID);
         inputs.VerticalAxisEvent += VerticalInputs;
         inputs.HorizontalAxisEvent += HorizontalInputs;
         inputs.RunEvent += RunInput;

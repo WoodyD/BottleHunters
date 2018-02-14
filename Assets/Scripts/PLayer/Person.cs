@@ -12,6 +12,7 @@ public class Person : MonoBehaviour
     [System.Serializable]
     public class MainData
     {
+        public int playerID;
         public float health;
         public float speed;
         //private float health;

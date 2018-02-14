@@ -688,24 +688,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1642560121184168
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4365835874529988}
-  - component: {fileID: 20910751298884780}
-  - component: {fileID: 124368589672705940}
-  - component: {fileID: 81351060251045046}
-  m_Layer: 0
-  m_Name: Main Camera
-  m_TagString: MainCamera
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1645064169722710
 GameObject:
   m_ObjectHideFlags: 1
@@ -716,21 +698,6 @@ GameObject:
   - component: {fileID: 4467808542179078}
   m_Layer: 0
   m_Name: LeftHandMiddle3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1648650657608490
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4063599670902626}
-  m_Layer: 0
-  m_Name: CameraHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1228,20 +1195,6 @@ Transform:
   m_Father: {fileID: 4432217262230526}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4063599670902626
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1648650657608490}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4365835874529988}
-  m_Father: {fileID: 4615577389613018}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4071321834351914
 Transform:
   m_ObjectHideFlags: 1
@@ -1510,19 +1463,6 @@ Transform:
   m_Father: {fileID: 4161631926921718}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4365835874529988
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1642560121184168}
-  m_LocalRotation: {x: 0.1293756, y: -0, z: -0, w: 0.9915957}
-  m_LocalPosition: {x: 0, y: 2.52, z: -2.88}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4063599670902626}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 14.867001, y: 0, z: 0}
 --- !u!4 &4366360975896862
 Transform:
   m_ObjectHideFlags: 1
@@ -1841,7 +1781,6 @@ Transform:
   m_Children:
   - {fileID: 4238568033648138}
   - {fileID: 4917126528464974}
-  - {fileID: 4063599670902626}
   m_Father: {fileID: 4440191160804610}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2223,42 +2162,6 @@ Transform:
   m_Father: {fileID: 4723539559999458}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &20910751298884780
-Camera:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1642560121184168}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
 --- !u!54 &54926181757948974
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -2274,13 +2177,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 1
---- !u!81 &81351060251045046
-AudioListener:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1642560121184168}
-  m_Enabled: 1
 --- !u!95 &95592257553220460
 Animator:
   serializedVersion: 3
@@ -2314,13 +2210,6 @@ MonoBehaviour:
     speed: 2
   playerAnimation: {fileID: 0}
   playerRB: {fileID: 0}
---- !u!124 &124368589672705940
-Behaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1642560121184168}
-  m_Enabled: 1
 --- !u!136 &136074089663234284
 CapsuleCollider:
   m_ObjectHideFlags: 1
