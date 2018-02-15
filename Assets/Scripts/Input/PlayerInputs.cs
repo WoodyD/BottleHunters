@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ public class PlayerInputs : MonoBehaviour {
     public System.Action<float> HorizontalAxisEvent;
     public System.Action<float> VerticalAxisEvent;
     public System.Action<bool> RunEvent;
+	public System.Action<bool> JumpEvent;
+	public System.Action<bool> CrouchEvent;
 
 	public int ControllerID { get; internal set; }
 
@@ -19,10 +22,7 @@ public class PlayerInputs : MonoBehaviour {
         if (ControllerID == 0) //TODO: ATM assume that player 0 play on keyboard
             Controller = ControllerType.Keyboard;
         else
-        {
             Controller = ControllerType.Pad;
-
-        }
     }
 
     void Update(){
@@ -35,18 +35,34 @@ public class PlayerInputs : MonoBehaviour {
     void GetKeyboadInputs(){
 		HorizontalAxisEvent(Input.GetAxis("XAxisKeyboard"));
 		VerticalAxisEvent(Input.GetAxis("YAxisKeyboard"));
-		if (Input.GetKeyDown(KeyCode.LeftShift))
-			RunEvent(true);
-		if (Input.GetKeyUp(KeyCode.LeftShift))
-			RunEvent(false);
+		RunEvent (GetKeyEvent (KeyCode.LeftShift));
+		JumpEvent (GetKeyEvent (KeyCode.Space));
+		CrouchEvent (GetKeyEvent (KeyCode.LeftControl));
     }
 
     void GetPadInputs(){
         HorizontalAxisEvent(Input.GetAxis("XAxisPad" + ControllerID));
         VerticalAxisEvent(Input.GetAxis("YAxisPad" + ControllerID));
-		if (Input.GetKeyDown(KeyCode.LeftShift))
-			RunEvent(true);
-		if (Input.GetKeyUp(KeyCode.LeftShift))
-			RunEvent(false);
+		RunEvent (GetPadRunEvent ());
+		JumpEvent (GetPadJumpEvent ());
     }
+
+	bool GetKeyEvent (KeyCode code) {
+		if (Input.GetKey (code))
+			return true;
+		else
+			return false;
+	}
+
+	bool GetPadRunEvent () {
+		float runTrigger = Input.GetAxis ("RunAxisPad" + ControllerID);
+		if (runTrigger > 0.2)
+			return true;
+		else
+			return false;
+	}
+
+	private bool GetPadJumpEvent () {
+		throw new NotImplementedException ();
+	}
 }

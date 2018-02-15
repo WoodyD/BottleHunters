@@ -12,6 +12,8 @@ public class PlayerController : Person {
     private float inputV;
     private float inputH;
     private bool run;
+	private bool grounded;
+	private bool crouch;
 	private float newRotation;
 
     void Awake()
@@ -21,21 +23,31 @@ public class PlayerController : Person {
 		if (!playerRB)
 			playerRB = GetComponent<Rigidbody>();
 		newRotation = transform.rotation.y;
+		grounded = true;
 
-        inputs = gameObject.AddComponent<PlayerInputs>();
-        inputs.InitializePlayerInputs(PlayerStats.playerID);
-        inputs.VerticalAxisEvent += VerticalInputs;
-        inputs.HorizontalAxisEvent += HorizontalInputs;
-        inputs.RunEvent += RunInput;
+		InitializeController ();
     }
+
+	void InitializeController () {
+		inputs = gameObject.AddComponent<PlayerInputs> ();
+		inputs.InitializePlayerInputs (PlayerStats.playerID);
+		inputs.VerticalAxisEvent += VerticalInputs;
+		inputs.HorizontalAxisEvent += HorizontalInputs;
+		inputs.RunEvent += RunInput;
+		inputs.JumpEvent += JumpInput;
+		inputs.CrouchEvent += CrouchInput;
+	}
 
     void FixedUpdate()
     {
-        Vector3 moveDirection = new Vector3(0f, 0f, inputV);
-        moveDirection = transform.TransformDirection(PlayerStats.speed * moveDirection);
-        playerRB.velocity = run ? 2f * moveDirection : moveDirection;
+        Vector3 moveForward = new Vector3(0f, 0f,
+			run ? 2f * PlayerStats.speed * inputV : PlayerStats.speed * inputV);
 
-        newRotation += inputH * PlayerStats.speed;
+		moveForward = transform.TransformDirection (moveForward);
+		//playerRB.velocity = transform.TransformDirection (moveForward);
+		playerRB.AddForce (moveForward, ForceMode.Impulse);
+
+		newRotation += inputH * 3;
         transform.eulerAngles = new Vector3(0f, newRotation, 0f);
     }
 
@@ -51,5 +63,8 @@ public class PlayerController : Person {
         run = args;
 		playerAnimation.SetBool("Run", args);
     }
-
+	void JumpInput (bool args) {
+	}
+	void CrouchInput (bool args) {
+	}
 }
