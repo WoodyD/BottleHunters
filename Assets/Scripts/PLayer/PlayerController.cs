@@ -12,18 +12,18 @@ public class PlayerController : Person {
     private float inputV;
     private float inputH;
     private bool run;
-	private bool grounded;
+	private bool isGrounded;
 	private bool crouch;
 	private float newRotation;
 
-    void Awake()
+	void Awake()
     {
 		if (!playerAnimation)
 			playerAnimation = GetComponent<Animator>();
 		if (!playerRB)
 			playerRB = GetComponent<Rigidbody>();
 		newRotation = transform.rotation.y;
-		grounded = true;
+		isGrounded = true;
 
 		InitializeController ();
     }
@@ -44,7 +44,6 @@ public class PlayerController : Person {
 			run ? 2f * PlayerStats.speed * inputV : PlayerStats.speed * inputV);
 
 		moveForward = transform.TransformDirection (moveForward);
-		//playerRB.velocity = transform.TransformDirection (moveForward);
 		playerRB.AddForce (moveForward, ForceMode.Impulse);
 
 		newRotation += inputH * 3;
@@ -60,11 +59,17 @@ public class PlayerController : Person {
 		playerAnimation.SetFloat("InputH", args);
 	}
     void RunInput(bool args){
+		if (run == args)
+			return;
         run = args;
 		playerAnimation.SetBool("Run", args);
     }
 	void JumpInput (bool args) {
+		if (!isGrounded)
+			return;
 	}
 	void CrouchInput (bool args) {
+		if (crouch == args)
+			return;
 	}
 }
