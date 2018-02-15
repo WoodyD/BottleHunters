@@ -44,7 +44,7 @@ public class PlayerInputs : MonoBehaviour {
         HorizontalAxisEvent(Input.GetAxis("XAxisPad" + ControllerID));
         VerticalAxisEvent(Input.GetAxis("YAxisPad" + ControllerID));
 		RunEvent (GetPadRunEvent ());
-		JumpEvent (GetPadJumpEvent ());
+		//JumpEvent (GetPadJumpEvent ());
     }
 
 	bool GetKeyEvent (KeyCode code) {

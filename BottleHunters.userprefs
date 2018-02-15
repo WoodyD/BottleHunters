@@ -1,9 +1,9 @@
 ﻿<Properties StartupConfiguration="{96CECD67-85B1-D8F4-DD98-66120A5F9F8A}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PLayer/Person.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Input/PlayerInputs.cs">
     <Files>
-      <File FileName="Assets/Scripts/PLayer/Person.cs" Line="16" Column="28" />
-      <File FileName="Assets/Scripts/PLayer/PlayerController.cs" Line="45" Column="89" />
-      <File FileName="Assets/Scripts/Input/PlayerInputs.cs" Line="17" Column="9" />
+      <File FileName="Assets/Scripts/PLayer/Person.cs" Line="17" Column="28" />
+      <File FileName="Assets/Scripts/PLayer/PlayerController.cs" Line="51" Column="9" />
+      <File FileName="Assets/Scripts/Input/PlayerInputs.cs" Line="66" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.BottleHunters PreferredExecutionTarget="Unity.Editor" />

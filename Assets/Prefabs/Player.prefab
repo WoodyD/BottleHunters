@@ -913,6 +913,7 @@ GameObject:
   - component: {fileID: 54926181757948974}
   - component: {fileID: 136074089663234284}
   - component: {fileID: 114171625683780488}
+  - component: {fileID: 143169175048170434}
   m_Layer: 0
   m_Name: ZombieCop
   m_TagString: Untagged
@@ -2330,7 +2331,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1780783905287690}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.3
   m_Height: 2
   m_Direction: 1
@@ -2506,3 +2507,20 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0016144365, y: 0.3648103, z: 0.057211608}
     m_Extent: {x: 0.11398159, y: 0.22361356, z: 0.14784452}
   m_DirtyAABB: 0
+--- !u!143 &143169175048170434
+CharacterController:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1780783905287690}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.3
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
