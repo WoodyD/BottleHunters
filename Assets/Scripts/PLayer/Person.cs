@@ -15,6 +15,7 @@ public class Person : MonoBehaviour
         public int playerID;
         public float health;
         public float speed;
+		public float jumpSpeed;
         //private float health;
         //public float Health
         //{

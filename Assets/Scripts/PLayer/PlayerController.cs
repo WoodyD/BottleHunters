@@ -13,7 +13,7 @@ public class PlayerController : Person {
     private float inputV;
     private float inputH;
     private bool run;
-	private bool isGrounded;
+	private bool jump;
 	private bool crouch;
 	private float newRotation;
 
@@ -28,7 +28,6 @@ public class PlayerController : Person {
 			playerRB = GetComponent<Rigidbody>();
         
 		newRotation = transform.rotation.y;
-		isGrounded = true;
 
 		InitializeController ();
     }
@@ -45,14 +44,19 @@ public class PlayerController : Person {
 
     void FixedUpdate()
     {
-        Vector3 moveForward = new Vector3(0f, 0f,
+        Vector3 moveDirection = new Vector3(0f, 0f,
 			run ? 2f * PlayerStats.speed * inputV : PlayerStats.speed * inputV);
-		moveForward = transform.TransformDirection (moveForward);
+		if (jump) {
+			jump = false;
+			//moveDirection.y = PlayerStats.jumpSpeed;
+			playerCC.Move (new Vector3 (0f, PlayerStats.jumpSpeed, 0f));
+		}
+		moveDirection = transform.TransformDirection (moveDirection);
 
         if(playerCC)
-			playerCC.Move(moveForward);
+			playerCC.SimpleMove(moveDirection);
         else
-            playerRB.AddForce (moveForward, ForceMode.Impulse);
+            playerRB.AddForce (moveDirection, ForceMode.Impulse);
 
 		newRotation += inputH * 3;
         transform.eulerAngles = new Vector3(0f, newRotation, 0f);
@@ -73,10 +77,14 @@ public class PlayerController : Person {
 		playerAnimation.SetBool("Run", args);
     }
 	void JumpInput (bool args) {
-		if (!isGrounded)
+		if (playerCC && !playerCC.isGrounded)
 			return;
-        isGrounded = false;
-        playerAnimation.SetBool("Jump", args);
+		if (!args) {
+			playerAnimation.SetBool ("Jump", args);
+			return;
+		}
+		jump = true;
+		playerAnimation.SetBool("Jump", args);
 	}
 	void CrouchInput (bool args) {
 		if (crouch == args)

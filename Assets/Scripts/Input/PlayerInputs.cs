@@ -17,7 +17,9 @@ public class PlayerInputs : MonoBehaviour {
 
     ControllerType Controller;
 
+	bool initialized;
     public void InitializePlayerInputs(int playerID){
+		initialized = true;
         ControllerID = playerID;
         if (ControllerID == 0) //TODO: ATM assume that player 0 play on keyboard
             Controller = ControllerType.Keyboard;
@@ -25,11 +27,13 @@ public class PlayerInputs : MonoBehaviour {
             Controller = ControllerType.Pad;
     }
 
-    void Update(){
-        if (Controller == ControllerType.Keyboard)
-            GetKeyboadInputs();
-        else if (Controller == ControllerType.Pad)
-            GetPadInputs();
+	void Update () {
+		if (initialized) {
+			if (Controller == ControllerType.Keyboard)
+				GetKeyboadInputs ();
+			else if (Controller == ControllerType.Pad)
+				GetPadInputs ();
+		}
     }
 
     void GetKeyboadInputs(){
