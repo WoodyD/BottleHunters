@@ -2,20 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Territory{Own, Neutral, Enemy}
+public enum Territory { Own, Neutral, Enemy }
 
-public class Person : MonoBehaviour
-{
+public class Person : MonoBehaviour {
 
     public MainData PlayerStats;
 
     [System.Serializable]
-    public class MainData
-    {
+    public class MainData {
         public int playerID;
         public float health;
         public float speed;
-		public float jumpSpeed;
+        public float jumpSpeed;
         //private float health;
         //public float Health
         //{

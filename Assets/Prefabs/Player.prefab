@@ -911,7 +911,6 @@ GameObject:
   - component: {fileID: 4615577389613018}
   - component: {fileID: 95592257553220460}
   - component: {fileID: 54926181757948974}
-  - component: {fileID: 136074089663234284}
   - component: {fileID: 114171625683780488}
   - component: {fileID: 143169175048170434}
   - component: {fileID: 114203513251456922}
@@ -2239,9 +2238,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.5
+    y: 0
     width: 1
-    height: 0.5
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -2255,7 +2254,7 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
+  m_HDR: 0
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
@@ -2316,6 +2315,7 @@ MonoBehaviour:
     playerID: 0
     health: 5
     speed: 1
+    jumpSpeed: 3
   playerAnimation: {fileID: 95592257553220460}
   playerRB: {fileID: 0}
   playerCC: {fileID: 143169175048170434}
@@ -2337,19 +2337,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1098261984273918}
   m_Enabled: 1
---- !u!136 &136074089663234284
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1780783905287690}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.3
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!137 &137050199943454030
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
