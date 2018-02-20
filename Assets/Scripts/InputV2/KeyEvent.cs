@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyEvent : MonoBehaviour {
+public class KeyEvent {
+	public System.Action OnKeyEvent;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+	public void GetKeyEvent (KeyCode key) {
+		if (Input.GetKeyDown (key))
+			OnKeyEvent ();
 	}
 }
