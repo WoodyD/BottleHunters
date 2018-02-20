@@ -1,12 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
-public class KeyEvent {
-	public System.Action OnKeyEvent;
+public class KeyEvent : IControllerEvent<ControllerSet> {
+    
+    public event Action ControllerEvent;
 
-	public void GetKeyEvent (KeyCode key) {
-		if (Input.GetKeyDown (key))
-			OnKeyEvent ();
-	}
+    ControllerSet set = new ControllerSet();
+
+    public KeyEvent(ControllerSet set){
+        this.set = set;
+    }
+
+    public void GetEvent(ControllerSet controllerSet) {
+        
+    }
 }

@@ -5,8 +5,7 @@ using UnityEngine;
 public enum ControllerType { Keyboard, Pad }
 
 public class InputManager {
-
-    System.Action<bool> keyPressed;
+    readonly System.Action<bool> keyPressed;
 
     bool pushed;
     public void GetKeyEvent(KeyCode key, bool singlePush = true) {
