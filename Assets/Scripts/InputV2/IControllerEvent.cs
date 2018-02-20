@@ -4,8 +4,8 @@ using UnityEngine;
 public interface IControllerEvent<ControllerSet> {
     
     event Action ControllerEvent;
-    //new ControllerSet();
-    void GetEvent(ControllerSet controllerSet);
+    void Initialize(ControllerSet controllerSet);
+    void GetEvent();
 }
 
 public class ControllerSet{

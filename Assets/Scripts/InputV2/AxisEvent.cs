@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AxisEvent {
-	public System.Action<float> OnAxisEvent;
-	public float inputDeadZone = 0.2f;
-
+	
+    private System.Action<float> OnAxisEvent;
+    private string axisName;
+	private float inputDeadZone = 0.2f;
 	private float axisInput;
-	public void GetAxisEvent (string axisName, bool onlyPositive = false, bool onlyNegative = false) {
+    private bool onlyPositive;
+    private bool onlyNegative;
+
+    public AxisEvent(System.Action<float> EventToAdd, string axisName, bool onlyPositive = false, bool onlyNegative = false){
+        OnAxisEvent += EventToAdd;
+        this.axisName = axisName;
+        this.onlyPositive = onlyPositive;
+        this.onlyNegative = onlyNegative;
+    }
+
+	public void GetEvent () {
 		axisInput = Input.GetAxis (axisName);
 		if (!onlyPositive && !onlyNegative) {
 			if (axisInput < -inputDeadZone || axisInput > inputDeadZone)
@@ -19,6 +30,5 @@ public class AxisEvent {
 			if (axisInput < -inputDeadZone)
 				OnAxisEvent (axisInput);
 		}
-
 	}
 }

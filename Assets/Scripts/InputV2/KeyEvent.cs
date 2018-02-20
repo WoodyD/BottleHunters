@@ -1,17 +1,19 @@
 ﻿using System;
 using UnityEngine;
 
-public class KeyEvent : IControllerEvent<ControllerSet> {
+public class KeyEvent /*: IControllerEvent<ControllerSet>*/ {
     
-    public event Action ControllerEvent;
+    private event Action OnKeyEvent;
+    private KeyCode key;
 
-    ControllerSet set = new ControllerSet();
-
-    public KeyEvent(ControllerSet set){
-        this.set = set;
+    public KeyEvent(Action EventToAdd, KeyCode key){
+        OnKeyEvent += EventToAdd;
+        this.key = key;
     }
 
-    public void GetEvent(ControllerSet controllerSet) {
-        
+    public void CheckEvent() {
+        if(Input.GetKeyDown(key)){
+            OnKeyEvent();
+        }
     }
 }

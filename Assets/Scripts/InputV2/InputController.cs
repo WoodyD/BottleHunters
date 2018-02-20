@@ -10,22 +10,29 @@ public class InputController{
 	public KeyEvent jumpEvent;
 	public KeyEvent crouchEvent;
 
-    IControllerEvent<ControllerSet> someEvent;
-
     public void Initialize () {
-        //someEvent = new KeyEvent();
+        verticalAxisEvent = new AxisEvent(OnVerticalAxisEvent, "YAxisKeyboard");
+        horizontalAxisEvent = new AxisEvent(OnhorizontalAxisEvent, "XAxisKeyboard");
+        runEvent = new KeyEvent(OnRunEvent, KeyCode.LeftShift);
 	}
 
 	public void Update () {
-		verticalAxisEvent.GetAxisEvent ("Vertical");
-		horizontalAxisEvent.GetAxisEvent ("Horizontal");
-		//runEvent.GetKeyEvent (KeyCode.LeftShift);
-
+        GetKeyboardInputs();
 	}
 
     private void GetKeyboardInputs(){
-		verticalAxisEvent.GetAxisEvent("Vertical");
-		horizontalAxisEvent.GetAxisEvent("Horizontal");
-		//runEvent.GetKeyEvent(KeyCode.LeftShift);
+		verticalAxisEvent.GetEvent();
+		horizontalAxisEvent.GetEvent();
+		runEvent.CheckEvent();
+    }
+
+    void OnVerticalAxisEvent(float input){
+        
+    }
+	void OnhorizontalAxisEvent(float input) {
+
+	}
+    void OnRunEvent(){
+        
     }
 }
