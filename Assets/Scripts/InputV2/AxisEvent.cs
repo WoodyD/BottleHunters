@@ -18,7 +18,7 @@ public class AxisEvent {
         this.onlyNegative = onlyNegative;
     }
 
-	public void GetEvent () {
+	public void CheckEvent () {
 		axisInput = Input.GetAxis (axisName);
 		if (!onlyPositive && !onlyNegative) {
 			if (axisInput < -inputDeadZone || axisInput > inputDeadZone)

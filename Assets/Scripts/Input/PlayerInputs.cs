@@ -7,9 +7,12 @@ public class PlayerInputs : MonoBehaviour {
 
     public System.Action<float> HorizontalAxisEvent;
     public System.Action<float> VerticalAxisEvent;
-    public System.Action<bool> RunEvent;
+	public System.Action<float> verticalCameraEvent;
+	public System.Action<float> horizontalCameraEvent;
+	public System.Action<bool> RunEvent;
     public System.Action<bool> JumpEvent;
     public System.Action<bool> CrouchEvent;
+	public System.Action BurpEvent;
 
     public int ControllerID { get; internal set; }
 
@@ -37,10 +40,13 @@ public class PlayerInputs : MonoBehaviour {
     void GetKeyboadInputs() {
         HorizontalAxisEvent(Input.GetAxis("XAxisKeyboard"));
         VerticalAxisEvent(Input.GetAxis("YAxisKeyboard"));
-        RunEvent(GetKeyEvent(KeyCode.LeftShift));
-        JumpEvent(GetKeyEvent(KeyCode.Space));
-        CrouchEvent(GetKeyEvent(KeyCode.LeftControl));
-    }
+
+        RunEvent(GetBoolKeyEvent (KeyCode.LeftShift));
+        JumpEvent(GetBoolKeyEvent (KeyCode.Space));
+        CrouchEvent(GetBoolKeyEvent (KeyCode.LeftControl));
+		GetKeyEvent (BurpEvent, KeyCode.E);
+
+	}
 
     void GetPadInputs() {
         HorizontalAxisEvent(Input.GetAxis("XAxisPad" + ControllerID));
@@ -49,7 +55,12 @@ public class PlayerInputs : MonoBehaviour {
         //JumpEvent (GetPadJumpEvent ());
     }
 
-    bool GetKeyEvent(KeyCode code) {
+	void GetKeyEvent (Action action, KeyCode key) {
+		if(Input.GetKeyDown(key))
+			action ();
+	}
+
+	bool GetBoolKeyEvent(KeyCode code) {
         if (Input.GetKey(code))
             return true;
         else

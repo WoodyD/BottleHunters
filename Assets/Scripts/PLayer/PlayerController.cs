@@ -7,8 +7,11 @@ public class PlayerController : Person {
 
     public Animator playerAnimation;
     public CharacterController playerCC;
+	public Camera playerCamera;
+	public ParticleSystem burpParticle;
 
     private PlayerInputs inputs;
+	//private InputController inputController;
     private float inputV;
     private float inputH;
     private bool run;
@@ -17,14 +20,15 @@ public class PlayerController : Person {
     private float newRotation;
 
     void Awake() {
-        if (!playerAnimation)
-            playerAnimation = GetComponent<Animator>();
-        if (!playerCC)
-            playerCC = GetComponent<CharacterController>();
+		//if (!playerAnimation)
+		//    playerAnimation = GetComponent<Animator>();
+		//if (!playerCC)
+		//    playerCC = GetComponent<CharacterController>();
 
-        newRotation = transform.rotation.y;
+		//inputController = new InputController();
 
-        InitializeController();
+		newRotation = transform.rotation.y;
+		InitializeController ();
     }
 
     void InitializeController() {
@@ -35,22 +39,37 @@ public class PlayerController : Person {
         inputs.RunEvent += RunInput;
         inputs.JumpEvent += JumpInput;
         inputs.CrouchEvent += CrouchInput;
+		inputs.BurpEvent += Burp;
     }
 
-    void FixedUpdate() {
-        if (jump) {
-            jump = false;
-            //moveDirection.y = PlayerStats.jumpSpeed;
-            playerCC.Move(new Vector3(0f, PlayerStats.jumpSpeed, 0f));
-        }
-        Vector3 moveDirection = new Vector3(0f, 0f,
-            run ? 2f * PlayerStats.speed * inputV : PlayerStats.speed * inputV);
-        moveDirection = transform.TransformDirection(moveDirection);
-        playerCC.SimpleMove(moveDirection);
 
-        newRotation += inputH * 3;
-        transform.eulerAngles = new Vector3(0f, newRotation, 0f);
+	void FixedUpdate() {
+		MovePlayer ();
+		RotatePlayer ();
     }
+
+	void MovePlayer () {
+		if (jump) {
+			jump = false;
+			//moveDirection.y = PlayerStats.jumpSpeed;
+			playerCC.Move(new Vector3(0f, PlayerStats.jumpSpeed, 0f));
+		}
+
+		float speed = PlayerStats.speed * inputV;
+		if (run) {
+			speed *= 2;
+		}
+
+		Vector3 moveDirection = new Vector3 (0f, 0f, speed);
+		moveDirection = transform.TransformDirection (moveDirection);
+		playerCC.SimpleMove (moveDirection);
+	}
+
+	void RotatePlayer () {
+		newRotation += inputH * 3;
+		transform.eulerAngles = new Vector3 (0f, newRotation, 0f);
+	}
+
 
     void VerticalInputs(float args) {
         inputV = args;
@@ -80,4 +99,8 @@ public class PlayerController : Person {
         if (crouch == args)
             return;
     }
+	void Burp () {
+		if (burpParticle)
+			burpParticle.Play ();
+	}
 }

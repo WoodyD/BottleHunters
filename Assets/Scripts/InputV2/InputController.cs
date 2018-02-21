@@ -6,33 +6,35 @@ using UnityEngine;
 public class InputController{
 	public AxisEvent verticalAxisEvent;
 	public AxisEvent horizontalAxisEvent;
+	public AxisEvent verticalCameraEvent;
+	public AxisEvent horizontalCameraEvent;
 	public KeyEvent runEvent;
 	public KeyEvent jumpEvent;
 	public KeyEvent crouchEvent;
 
-    public void Initialize () {
+    public InputController () {
         verticalAxisEvent = new AxisEvent(OnVerticalAxisEvent, "YAxisKeyboard");
         horizontalAxisEvent = new AxisEvent(OnhorizontalAxisEvent, "XAxisKeyboard");
         runEvent = new KeyEvent(OnRunEvent, KeyCode.LeftShift);
 	}
 
 	public void Update () {
-        GetKeyboardInputs();
+        CheckKeyboardInputs();
 	}
 
-    private void GetKeyboardInputs(){
-		verticalAxisEvent.GetEvent();
-		horizontalAxisEvent.GetEvent();
+    void CheckKeyboardInputs(){
+		verticalAxisEvent.CheckEvent ();
+		horizontalAxisEvent.CheckEvent ();
 		runEvent.CheckEvent();
     }
 
-    void OnVerticalAxisEvent(float input){
+    public void OnVerticalAxisEvent(float input){
         
     }
-	void OnhorizontalAxisEvent(float input) {
+	public void OnhorizontalAxisEvent(float input) {
 
 	}
-    void OnRunEvent(){
+    public void OnRunEvent(){
         
     }
 }
