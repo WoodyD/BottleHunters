@@ -6,8 +6,6 @@ using UnityEngine;
 public class InputController{
 	public AxisEvent verticalAxisEvent;
 	public AxisEvent horizontalAxisEvent;
-	public AxisEvent verticalCameraEvent;
-	public AxisEvent horizontalCameraEvent;
 	public KeyEvent runEvent;
 	public KeyEvent jumpEvent;
 	public KeyEvent crouchEvent;

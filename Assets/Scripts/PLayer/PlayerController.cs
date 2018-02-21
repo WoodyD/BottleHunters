@@ -100,7 +100,7 @@ public class PlayerController : Person {
             return;
     }
 	void Burp () {
-		if (burpParticle)
+		if (burpParticle && !burpParticle.isPlaying)
 			burpParticle.Play ();
 	}
 }
