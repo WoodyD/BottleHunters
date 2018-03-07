@@ -946,6 +946,7 @@ GameObject:
   - component: {fileID: 114171625683780488}
   - component: {fileID: 143169175048170434}
   - component: {fileID: 114203513251456922}
+  - component: {fileID: 114391811061886342}
   m_Layer: 0
   m_Name: ZombieCop
   m_TagString: Untagged
@@ -2391,6 +2392,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d9050f76255e4b679e520a83031312d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114391811061886342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1780783905287690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 1
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 4615577389613018}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!124 &124624554567033576
 Behaviour:
   m_ObjectHideFlags: 1
