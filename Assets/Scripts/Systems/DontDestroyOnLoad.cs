@@ -13,7 +13,7 @@ public class DontDestroyOnLoad : MonoBehaviour {
         if(gameComponent == null)
             gameComponent = this;         
         else
-            Destroy(this);
+            DestroyImmediate(this);
         
 	}
 
