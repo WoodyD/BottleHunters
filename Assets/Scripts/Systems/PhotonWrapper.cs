@@ -3,33 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PhotonWrapper : Photon.PunBehaviour {
-
-    private string roomName = "TestRoom";
-
+	
+	public string roomName = "TestRoom";
+	public bool IsConnected { get; private set; }
+	
 	public void TryToConnect () {
+		IsConnected = false;
         PhotonNetwork.ConnectUsingSettings("0.0.1");
 	}
 
     public override void OnConnectedToPhoton(){
-        Debug.Log("[FTN] Connected to photon server.");
+        UIController.Instance.ShowPhotonLog("[FTN] Connected to photon server.");
     }
 
     public override void OnConnectedToMaster(){
-		Debug.Log("[FTN] Connected to photon master server. Try to create room: " + roomName);
+		UIController.Instance.ShowPhotonLog("[FTN] Connected to photon master server. Try to create room: " + roomName);
 		PhotonNetwork.CreateRoom(roomName);
     }
 
     public override void OnPhotonCreateRoomFailed(object[] codeAndMsg){
-        Debug.Log("[FTN] Failed to create room. Error msg: " + codeAndMsg[1]);
-        Debug.Log("[FTN] Assume that room already created. Try to join the room: " + roomName);
+        UIController.Instance.ShowPhotonLog("[FTN] Failed to create room. Error msg: " + codeAndMsg[1]);
+        UIController.Instance.ShowPhotonLog("[FTN] Assume that room already created. Try to join the room: " + roomName);
         PhotonNetwork.JoinRoom(roomName);
     }
 
 	public override void OnJoinedRoom(){
-		Debug.Log("[FTN] Joined the room: " + roomName);
+		UIController.Instance.ShowPhotonLog("[FTN] Joined the room: " + roomName);
+		IsConnected = true;
 	}
 
     public override void OnPhotonJoinRoomFailed(object[] codeAndMsg){
-        Debug.Log("[FTN] Failed to join room. Error msg: " + codeAndMsg[1]);
+        UIController.Instance.ShowPhotonLog("[FTN] Failed to join room. Error msg: " + codeAndMsg[1]);
+		IsConnected = false;
     }
 }
