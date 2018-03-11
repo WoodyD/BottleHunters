@@ -6,7 +6,7 @@ public class PhotonWrapper : Photon.PunBehaviour {
 
     private string roomName = "TestRoom";
 
-	void Start () {
+	public void TryToConnect () {
         PhotonNetwork.ConnectUsingSettings("0.0.1");
 	}
 
