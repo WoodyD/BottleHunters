@@ -45,7 +45,6 @@ public class PhotonWrapper : Photon.PunBehaviour {
 	public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer){
 		Debug.Log("[PHTN] New player connected to this room. ID: " + newPlayer.ID);
 		UpdateRoomInfo();
-		//GameSystemsController.Instance.player.SpawnPlayer ();
 	}
 
 	public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer) {

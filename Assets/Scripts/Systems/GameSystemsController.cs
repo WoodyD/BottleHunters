@@ -7,5 +7,6 @@ public class GameSystemsController : MonoBehaviourSingleton<GameSystemsControlle
 	public SceneChanger sceneChanger;
 	public PhotonWrapper photon;
 	public UIManager uiManager;
+	public Camera mainGameCamera;
 	public PlayerSpawner player;
 }

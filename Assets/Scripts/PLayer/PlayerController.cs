@@ -7,11 +7,11 @@ public class PlayerController : Person {
 
     public Animator playerAnimation;
     public CharacterController playerCC;
-	public Camera playerCamera;
+	public GameObject cameraHolder;
 	public ParticleSystem burpParticle;
+	public PhotonView photon;
 
-    private PlayerInputs inputs;
-	//private InputController inputController;
+	private PlayerInputs inputs;
     private float inputV;
     private float inputH;
     private bool run;
@@ -19,19 +19,17 @@ public class PlayerController : Person {
     private bool crouch;
     private float newRotation;
 
-    void Awake() {
-		//if (!playerAnimation)
-		//    playerAnimation = GetComponent<Animator>();
-		//if (!playerCC)
-		//    playerCC = GetComponent<CharacterController>();
-
-		//inputController = new InputController();
-
+    void OnEnable() { 
 		newRotation = transform.rotation.y;
 		InitializeController ();
+		SetPlayerCamera ();
     }
 
-    void InitializeController() {
+	void SetPlayerCamera () {
+		GameSystemsController.Instance.mainGameCamera.transform.SetParent (cameraHolder.transform);
+	}
+
+	void InitializeController() {
         inputs = gameObject.AddComponent<PlayerInputs>();
         inputs.InitializePlayerInputs(PlayerStats.playerID);
         inputs.VerticalAxisEvent += VerticalInputs;
@@ -44,7 +42,7 @@ public class PlayerController : Person {
 
 
 	void FixedUpdate () {
-		if (PhotonNetwork.player.IsLocal) {
+		if (photon.isMine) {
 			MovePlayer ();
 			RotatePlayer ();
 		}
