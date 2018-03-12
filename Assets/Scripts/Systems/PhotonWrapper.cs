@@ -6,27 +6,11 @@ public class PhotonWrapper : Photon.PunBehaviour {
 	public bool showRoomInfo;
 	public bool IsConnected { get; private set; }
 
-	public PhotonView player;
-	
+	public bool IsControllerByThisPlayer { get { return PhotonNetwork.player.IsLocal; } }
+
 	public void TryToConnect () {
 		IsConnected = false;
         PhotonNetwork.ConnectUsingSettings("0.0.1");
-	}
-	
-	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
-		if (stream.isWriting) {
-			//We own this player: send the others our data 
-			Debug.Log("My Input");
-			//stream.SendNext((int)controllerScript._characterState);
-			//stream.SendNext(transform.position);
-			//stream.SendNext(transform.rotation);
-		} else {
-			//Network player, receive data 
-			Debug.Log("Other player input");
-			//controllerScript._characterState = (CharacterState)(int)stream.ReceiveNext();
-			//correctPlayerPos = (Vector3)stream.ReceiveNext();
-			//correctPlayerRot = (Quaternion)stream.ReceiveNext();
-		}
 	}
 
 #region Photon events
@@ -61,6 +45,7 @@ public class PhotonWrapper : Photon.PunBehaviour {
 	public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer){
 		Debug.Log("[PHTN] New player connected to this room. ID: " + newPlayer.ID);
 		UpdateRoomInfo();
+		//GameSystemsController.Instance.player.SpawnPlayer ();
 	}
 
 	public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer) {

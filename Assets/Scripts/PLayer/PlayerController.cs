@@ -43,10 +43,26 @@ public class PlayerController : Person {
     }
 
 
-	void FixedUpdate() {
-		MovePlayer ();
-		RotatePlayer ();
+	void FixedUpdate () {
+		if (PhotonNetwork.player.IsLocal) {
+			MovePlayer ();
+			RotatePlayer ();
+		}
     }
+
+	void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info) {
+		if (stream.isWriting) {
+			//We own this player: send the others our data 
+			Debug.Log ("My Input");
+			stream.SendNext(transform.position);
+			stream.SendNext(transform.rotation);
+		} else {
+			//Network player, receive data 
+			Debug.Log ("Other player input");
+			transform.position = (Vector3)stream.ReceiveNext();
+			transform.rotation = (Quaternion)stream.ReceiveNext();
+		}
+	}
 
 	void MovePlayer () {
 		if (jump) {
