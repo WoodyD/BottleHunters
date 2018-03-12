@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ControllerType { Keyboard, Pad }
+
 public class PlayerInputs : MonoBehaviour {
 
     public System.Action<float> HorizontalAxisEvent;
@@ -19,13 +21,10 @@ public class PlayerInputs : MonoBehaviour {
     ControllerType Controller;
 
     bool initialized;
-    public void InitializePlayerInputs(int playerID) {
+	public void InitializePlayerInputs(ControllerType controller) {
         initialized = true;
-        ControllerID = playerID;
-        if (ControllerID == 0) //TODO: ATM assume that player 0 play on keyboard
-            Controller = ControllerType.Keyboard;
-        else
-            Controller = ControllerType.Pad;
+		Controller = controller;
+		ControllerID = PhotonNetwork.player.ID;
     }
 
     void Update() {

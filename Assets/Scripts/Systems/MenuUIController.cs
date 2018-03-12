@@ -12,21 +12,30 @@ public class MenuUIController : MonoBehaviourSingleton<MenuUIController> {
 	private string playerController;
 	
 	private void Start(){
-		playerController = selectControlList.captionText.ToString();
+		SetControlListValue();
+		
 		selectControlList.onValueChanged.AddListener(delegate {
 			OnDropdownValueChange(selectControlList);
 		});
 		connectButton.onClick.AddListener(OnConnectbuttonClick);
 		joinGameButton.onClick.AddListener(OnJoinGameButtonClick);
 	}
-
+	
 	public void ShowPhotonLog(string log){
 		photonLog.text += "\n";
 		photonLog.text += log;
 	}
 	
+	private void SetControlListValue(){
+		selectControlList.options.Clear();
+		selectControlList.options.Add(new Dropdown.OptionData() { text = ControllerType.Keyboard.ToString() });
+		selectControlList.options.Add(new Dropdown.OptionData() { text = ControllerType.Pad.ToString() });
+		selectControlList.RefreshShownValue();
+		playerController = selectControlList.captionText.text;
+	}
+	
 	private void OnDropdownValueChange(Dropdown ddValue){
-		playerController = ddValue.captionText.ToString();
+		playerController = ddValue.captionText.text;
 	}
 	
 	private void OnConnectbuttonClick() {
@@ -34,7 +43,9 @@ public class MenuUIController : MonoBehaviourSingleton<MenuUIController> {
 	}
 	
 	private void OnJoinGameButtonClick() {
-		if (GameSystemsController.Instance.photon.IsConnected)
+		if (GameSystemsController.Instance.photon.IsConnected) {
+			GameSystemsController.Instance.player.SetPlayerController(playerController);
 			GameSystemsController.Instance.sceneChanger.LoadScene(Scenes.TestScene);
+		}
 	}
 }

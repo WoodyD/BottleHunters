@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ControllerType { Keyboard, Pad }
-
 public class InputManager {
     readonly System.Action<bool> keyPressed;
 

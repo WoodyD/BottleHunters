@@ -32,7 +32,7 @@ public class PlayerController : Person {
 
 	void InitializeController() {
         inputs = gameObject.AddComponent<PlayerInputs>();
-        inputs.InitializePlayerInputs(PlayerStats.playerID);
+		inputs.InitializePlayerInputs(GameSystemsController.Instance.player.controller);
         inputs.VerticalAxisEvent += VerticalInputs;
         inputs.HorizontalAxisEvent += HorizontalInputs;
         inputs.RunEvent += RunInput;
