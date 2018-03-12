@@ -8,8 +8,8 @@ public class PlayerSpawner : MonoBehaviour{
 	public GameObject playerPrefab;
 
 	public void SpawnPlayer () {
-		//player = PhotonNetwork.Instantiate ("ZombieCop", new Vector3 (5, 5, 5), Quaternion.identity, 1, new object[] {(int)PunTeams.Team.red });
-		Instantiate (playerPrefab, new Vector3 (5, 5, 5), Quaternion.identity);
+		PhotonNetwork.Instantiate ("ZombieCop", new Vector3 (5, 0, 5), Quaternion.identity, 0);
+		//Instantiate (playerPrefab, new Vector3 (5, 0, 5), Quaternion.identity, player.transform);
 	}
 
 }

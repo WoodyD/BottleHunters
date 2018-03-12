@@ -19,7 +19,7 @@ public class PlayerController : Person {
     private bool crouch;
     private float newRotation;
 
-    void OnEnable() { 
+    void Awake() { 
 		newRotation = transform.rotation.y;
 		InitializeController ();
 		SetPlayerCamera ();
@@ -27,6 +27,7 @@ public class PlayerController : Person {
 
 	void SetPlayerCamera () {
 		GameSystemsController.Instance.mainGameCamera.transform.SetParent (cameraHolder.transform);
+		GameSystemsController.Instance.mainGameCamera.transform.localPosition = Vector3.zero;
 	}
 
 	void InitializeController() {
