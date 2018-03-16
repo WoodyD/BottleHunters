@@ -9,4 +9,9 @@ public class GameSystemsController : MonoBehaviourSingleton<GameSystemsControlle
 	public UIManager uiManager;
 	public Camera mainGameCamera;
 	public PlayerSpawner player;
+
+	void Start(){
+		if (photon)
+			photon.TryToConnect();
+	}
 }

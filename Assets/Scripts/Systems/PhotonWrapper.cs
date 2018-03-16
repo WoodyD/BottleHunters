@@ -21,13 +21,14 @@ public class PhotonWrapper : Photon.PunBehaviour {
 	
     public override void OnConnectedToMaster(){
 		ShowPhotonLogInMenu("[PHTN] Connected to photon master server. Try to create room: " + roomName);
-		PhotonNetwork.CreateRoom(roomName);
+		//PhotonNetwork.CreateRoom(roomName);
+		PhotonNetwork.JoinOrCreateRoom(roomName, null, null);
     }
 	
     public override void OnPhotonCreateRoomFailed(object[] codeAndMsg){
         ShowPhotonLogInMenu("[PHTN] Failed to create room. Error msg: " + codeAndMsg[1]);
         ShowPhotonLogInMenu("[PHTN] Assume that room already created. Try to join the room: " + roomName);
-		GameSystemsController.Instance.sceneChanger.LoadScene(Scenes.TestScene, true);
+		//GameSystemsController.Instance.sceneChanger.LoadScene(Scenes.TestScene, true);
         //PhotonNetwork.JoinRoom(roomName);
     }
 	
@@ -36,8 +37,17 @@ public class PhotonWrapper : Photon.PunBehaviour {
 		IsConnected = true;
 		if (showRoomInfo)
 			UpdateRoomInfo();
-		if(PhotonNetwork.player.ID>1)
-			GameSystemsController.Instance.player.SpawnPlayer();
+		SpawnPlayer();
+		//if(PhotonNetwork.player.ID>1)
+			//GameSystemsController.Instance.player.SpawnPlayer();
+	}
+
+	void SpawnPlayer() {
+		GameObject go = PhotonNetwork.Instantiate("ZombieCopCam", new Vector3(5, 0, 5), Quaternion.identity, 0);
+		Camera cam = go.GetComponentInChildren<Camera>();
+		cam.enabled = true;
+		cam.transform.localPosition = Vector3.zero;
+		
 	}
 	
 	public override void OnPhotonJoinRoomFailed(object[] codeAndMsg){

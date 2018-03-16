@@ -22,17 +22,21 @@ public class PlayerController : Person {
     void Awake() { 
 		newRotation = transform.rotation.y;
 		InitializeController ();
-		SetPlayerCamera ();
+		photon = GetComponent<PhotonView>();
+		//SetPlayerCamera ();
     }
 
 	void SetPlayerCamera () {
-		GameSystemsController.Instance.mainGameCamera.transform.SetParent (cameraHolder.transform);
-		GameSystemsController.Instance.mainGameCamera.transform.localPosition = Vector3.zero;
+		//GameSystemsController.Instance.mainGameCamera.transform.SetParent (cameraHolder.transform);
+		//GameSystemsController.Instance.mainGameCamera.transform.localPosition = Vector3.zero;
 	}
 
 	void InitializeController() {
         inputs = gameObject.AddComponent<PlayerInputs>();
-		inputs.InitializePlayerInputs(GameSystemsController.Instance.player.controller);
+		if (!GameSystemsController.IsNull && GameSystemsController.Instance.player)
+			inputs.InitializePlayerInputs(GameSystemsController.Instance.player.controller);
+		else
+			inputs.InitializePlayerInputs(ControllerType.Keyboard);
         inputs.VerticalAxisEvent += VerticalInputs;
         inputs.HorizontalAxisEvent += HorizontalInputs;
         inputs.RunEvent += RunInput;
@@ -50,17 +54,17 @@ public class PlayerController : Person {
     }
 
 	void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info) {
-		if (stream.isWriting) {
-			//We own this player: send the others our data 
-			Debug.Log ("My Input");
-			stream.SendNext(transform.position);
-			stream.SendNext(transform.rotation);
-		} else {
-			//Network player, receive data 
-			Debug.Log ("Other player input");
-			transform.position = (Vector3)stream.ReceiveNext();
-			transform.rotation = (Quaternion)stream.ReceiveNext();
-		}
+		//if (stream.isWriting) {
+		//	//We own this player: send the others our data 
+		//	Debug.Log ("My Input");
+		//	stream.SendNext(transform.position);
+		//	stream.SendNext(transform.rotation);
+		//} else {
+		//	//Network player, receive data 
+		//	Debug.Log ("Other player input");
+		//	transform.position = (Vector3)stream.ReceiveNext();
+		//	transform.rotation = (Quaternion)stream.ReceiveNext();
+		//}
 	}
 
 	void MovePlayer () {
