@@ -24,7 +24,7 @@ public class PlayerInputs : MonoBehaviour {
 	public void InitializePlayerInputs(ControllerType controller) {
         initialized = true;
 		Controller = controller;
-		ControllerID = PhotonNetwork.player.ID;
+		ControllerID = 1;/*PhotonNetwork.player.ID*/;
     }
 
     void Update() {

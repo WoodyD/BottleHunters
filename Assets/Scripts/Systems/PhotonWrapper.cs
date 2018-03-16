@@ -2,7 +2,7 @@
 
 public class PhotonWrapper : Photon.PunBehaviour {
 	
-	public string roomName = "TestRoom";
+	public static string roomName = "TestRoom";
 	public bool showRoomInfo;
 	public bool IsConnected { get; private set; }
 
@@ -27,7 +27,8 @@ public class PhotonWrapper : Photon.PunBehaviour {
     public override void OnPhotonCreateRoomFailed(object[] codeAndMsg){
         ShowPhotonLogInMenu("[PHTN] Failed to create room. Error msg: " + codeAndMsg[1]);
         ShowPhotonLogInMenu("[PHTN] Assume that room already created. Try to join the room: " + roomName);
-        PhotonNetwork.JoinRoom(roomName);
+		GameSystemsController.Instance.sceneChanger.LoadScene(Scenes.TestScene, true);
+        //PhotonNetwork.JoinRoom(roomName);
     }
 	
 	public override void OnJoinedRoom(){
@@ -35,6 +36,8 @@ public class PhotonWrapper : Photon.PunBehaviour {
 		IsConnected = true;
 		if (showRoomInfo)
 			UpdateRoomInfo();
+		if(PhotonNetwork.player.ID>1)
+			GameSystemsController.Instance.player.SpawnPlayer();
 	}
 	
 	public override void OnPhotonJoinRoomFailed(object[] codeAndMsg){
