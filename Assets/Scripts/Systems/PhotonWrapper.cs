@@ -8,6 +8,11 @@ public class PhotonWrapper : Photon.PunBehaviour {
 
 	public bool IsControllerByThisPlayer { get { return PhotonNetwork.player.IsLocal; } }
 
+	private void Awake()
+	{
+		TryToConnect();
+	}
+
 	public void TryToConnect () {
 		IsConnected = false;
         PhotonNetwork.ConnectUsingSettings("0.0.1");
@@ -43,10 +48,10 @@ public class PhotonWrapper : Photon.PunBehaviour {
 	}
 
 	void SpawnPlayer() {
-		GameObject go = PhotonNetwork.Instantiate("ZombieCopCam", new Vector3(5, 0, 5), Quaternion.identity, 0);
-		Camera cam = go.GetComponentInChildren<Camera>();
-		cam.enabled = true;
-		cam.transform.localPosition = Vector3.zero;
+		GameObject go = PhotonNetwork.Instantiate("NewPlayer", new Vector3(5, 0, 5), Quaternion.identity, 0);
+		//Camera cam = go.GetComponentInChildren<Camera>();
+		//cam.enabled = true;
+		//cam.transform.localPosition = Vector3.zero;
 		
 	}
 	
@@ -76,6 +81,9 @@ public class PhotonWrapper : Photon.PunBehaviour {
 		string roomInfo = "Room: " + roomName;
 		roomInfo += "\nCount of players: " + PhotonNetwork.playerList.Length;
 		roomInfo += "\nPlayer ID: " + PhotonNetwork.player.ID;
-		GameSystemsController.Instance.uiManager.SetLeftCornerText(roomInfo);
+		if (!GameSystemsController.IsNull && GameSystemsController.Instance.uiManager)
+			GameSystemsController.Instance.uiManager.SetLeftCornerText(roomInfo);
+		else
+			Debug.Log(roomInfo);
 	}
 }
