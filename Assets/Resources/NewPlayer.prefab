@@ -2323,7 +2323,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1993064174143850}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e7208d1f153aa4ce39c441b7032f2148, type: 3}
   m_Controller: {fileID: 9100000, guid: 964a2f4edbabc46b5941591ff2e73802, type: 2}
   m_CullingMode: 1
@@ -2355,8 +2355,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114510360603820342}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 1
-  instantiationId: 1
+  viewIdField: 0
+  instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114510360603820342
@@ -2381,15 +2381,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff13de763b0d64fb3bcecbf9d1e334ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleAnimation: {fileID: 7400000, guid: c72282248cd524965a75339800e1fa03, type: 2}
-  walkAnimation: {fileID: 7400000, guid: 82fbd57cbbeb242b6b4485790fce0fbb, type: 2}
-  runAnimation: {fileID: 7400000, guid: 00c73e62c97644c0eb6e2c012c9a0843, type: 3}
-  jumpPoseAnimation: {fileID: 7400000, guid: 29d2a506288d64531b497402c1bf5204, type: 3}
-  walkMaxAnimationSpeed: 0.75
-  trotMaxAnimationSpeed: 1
-  runMaxAnimationSpeed: 1
-  jumpAnimationSpeed: 1.15
-  landAnimationSpeed: 1
   _characterState: 0
   walkSpeed: 2
   runSpeed: 6

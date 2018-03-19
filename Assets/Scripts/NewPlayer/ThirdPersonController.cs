@@ -12,6 +12,8 @@ public enum CharacterState
 public class ThirdPersonController : MonoBehaviour
 {
 
+	/*
+	 //TO REMOVE
     public AnimationClip idleAnimation;
     public AnimationClip walkAnimation;
     public AnimationClip runAnimation;
@@ -23,8 +25,9 @@ public class ThirdPersonController : MonoBehaviour
     public float jumpAnimationSpeed = 1.15f;
     public float landAnimationSpeed = 1.0f;
 
-    private Animation _animation; 
-
+    private Animation _animation;
+*/
+	private Animator playerAnimation;
     public CharacterState _characterState;
 
     // The speed when walking
@@ -86,17 +89,19 @@ public class ThirdPersonController : MonoBehaviour
     void Awake()
     {
         moveDirection = transform.TransformDirection(Vector3.forward);
-
+		playerAnimation = GetComponent<Animator>();
+		
+		/*
         _animation = GetComponent<Animation>();
         if (!_animation)
             Debug.Log("The character you would like to control doesn't have animations. Moving her might look weird.");
 
-        /*
-    public AnimationClip idleAnimation;
-    public AnimationClip walkAnimation;
-    public AnimationClip runAnimation;
-    public AnimationClip jumpPoseAnimation;	
-        */
+        
+    //public AnimationClip idleAnimation;
+    //public AnimationClip walkAnimation;
+    //public AnimationClip runAnimation;
+    //public AnimationClip jumpPoseAnimation;	
+        
         if (!idleAnimation)
         {
             _animation = null;
@@ -117,11 +122,12 @@ public class ThirdPersonController : MonoBehaviour
             _animation = null;
             Debug.Log("No jump animation found and the character has canJump enabled. Turning off animations.");
         }
-
+*/
     }
 
     private Vector3 lastPos;
 
+	float v, h;
     void UpdateSmoothedMovementDirection()
     {
         Transform cameraTransform = Camera.main.transform;
@@ -136,8 +142,8 @@ public class ThirdPersonController : MonoBehaviour
         // Always orthogonal to the forward vector
         Vector3 right = new Vector3(forward.z, 0, -forward.x);
 
-        float v = Input.GetAxisRaw("Vertical");
-        float h = Input.GetAxisRaw("Horizontal");
+      	v = Input.GetAxisRaw("Vertical");
+        h = Input.GetAxisRaw("Horizontal");
 
         // Are we moving backwards or looking backwards
         if (v < -0.2f)
@@ -308,7 +314,8 @@ public class ThirdPersonController : MonoBehaviour
         }
         velocity = (transform.position - lastPos)*25;
 
-        // ANIMATION sector
+		// ANIMATION sector
+		/*
         if (_animation)
         {
             if (_characterState == CharacterState.Jumping)
@@ -361,14 +368,28 @@ public class ThirdPersonController : MonoBehaviour
                 }
             }
         }
+        */
+		if(playerAnimation){
+			float inputMove = Mathf.Clamp (velocity.sqrMagnitude, 0, 1);
+			playerAnimation.SetBool("Jump", false);
+			playerAnimation.SetBool("Run", false);
+			playerAnimation.SetFloat("InputV", inputMove/*v*/);
+			//playerAnimation.SetFloat("InputH", h);
+			
+			if (_characterState == CharacterState.Jumping){
+				if (IsGrounded()) {
+					//playerAnimation.SetBool("Jump", true);
+				}
+			} else if(_characterState == CharacterState.Running){
+					playerAnimation.SetBool("Run", true);
+			}
+				
+		}
         // ANIMATION sector
 
         // Set rotation to the move direction
-        if (IsGrounded())
-        {
-
+        if (IsGrounded()){
             transform.rotation = Quaternion.LookRotation(moveDirection);
-
         }
         else
         {
@@ -382,12 +403,10 @@ public class ThirdPersonController : MonoBehaviour
         }
 
         // We are in jump mode but just became grounded
-        if (IsGrounded())
-        {
+        if (IsGrounded()) {
             lastGroundedTime = Time.time;
             inAirVelocity = Vector3.zero;
-            if (jumping)
-            {
+            if (jumping) {
                 jumping = false;
                 SendMessage("DidLand", SendMessageOptions.DontRequireReceiver);
             }
