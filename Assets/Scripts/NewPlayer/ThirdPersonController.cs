@@ -5,9 +5,8 @@ public enum CharacterState
 {
     Idle = 0,
     Walking = 1,
-    Trotting = 2,
-    Running = 3,
-    Jumping = 4,
+    Running = 2,
+    Jumping = 3,
 }
 
 public class ThirdPersonController : MonoBehaviour
@@ -30,8 +29,6 @@ public class ThirdPersonController : MonoBehaviour
 
     // The speed when walking
     public float walkSpeed = 2.0f;
-    // after trotAfterSeconds of walking we trot with trotSpeed
-    public float trotSpeed = 4.0f;
     // when pressing "Fire3" button (cmd) we start running
     public float runSpeed = 6.0f;
 
@@ -45,7 +42,6 @@ public class ThirdPersonController : MonoBehaviour
     // The gravity in controlled descent mode
     public float speedSmoothing = 10.0f;
     public float rotateSpeed = 500.0f;
-    public float trotAfterSeconds = 3.0f;
 
     public bool canJump = false;
 
@@ -196,11 +192,6 @@ public class ThirdPersonController : MonoBehaviour
             {
                 targetSpeed *= runSpeed;
                 _characterState = CharacterState.Running;
-            }
-            else if (Time.time - trotAfterSeconds > walkTimeStart)
-            {
-                targetSpeed *= trotSpeed;
-                _characterState = CharacterState.Trotting;
             }
             else
             {
@@ -356,15 +347,6 @@ public class ThirdPersonController : MonoBehaviour
                             _animation[runAnimation.name].speed = Mathf.Clamp(velocity.magnitude, 0.0f, runMaxAnimationSpeed);
                         }
                         _animation.CrossFade(runAnimation.name);
-                    }
-                    else if (_characterState == CharacterState.Trotting)
-                    {
-                        _animation[walkAnimation.name].speed = trotMaxAnimationSpeed;
-                        if (this.isControllable)
-                        {
-                            _animation[walkAnimation.name].speed = Mathf.Clamp(velocity.magnitude, 0.0f, trotMaxAnimationSpeed);
-                        }
-                        _animation.CrossFade(walkAnimation.name);
                     }
                     else if (_characterState == CharacterState.Walking)
                     {

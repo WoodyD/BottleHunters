@@ -2355,8 +2355,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114510360603820342}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 1
+  instantiationId: 1
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114510360603820342
@@ -2392,15 +2392,13 @@ MonoBehaviour:
   landAnimationSpeed: 1
   _characterState: 0
   walkSpeed: 2
-  trotSpeed: 4
   runSpeed: 6
   inAirControlAcceleration: 3
   jumpHeight: 0.5
   gravity: 20
   speedSmoothing: 10
   rotateSpeed: 500
-  trotAfterSeconds: 3
-  canJump: 0
+  canJump: 1
   isControllable: 1
 --- !u!114 &114919398824866166
 MonoBehaviour:
@@ -2413,9 +2411,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd560cdf96d047a991f0915bcbc9259, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerCamera: {fileID: 0}
   cameraTransform: {fileID: 4920264700570230}
-  distance: 7
-  height: 3
+  distance: 5
+  height: 2
   angularSmoothLag: 0.3
   angularMaxSpeed: 15
   heightSmoothLag: 0.3

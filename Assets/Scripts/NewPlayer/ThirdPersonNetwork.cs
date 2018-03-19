@@ -6,7 +6,6 @@ public class ThirdPersonNetwork : Photon.MonoBehaviour
     ThirdPersonCamera cameraScript;
     ThirdPersonController controllerScript;
 
-
 	bool firstTake = false;
 
 	void OnEnable()

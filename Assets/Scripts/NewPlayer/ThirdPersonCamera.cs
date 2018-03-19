@@ -4,6 +4,7 @@ using System.Collections;
 public class ThirdPersonCamera : MonoBehaviour
 {
 
+	public Camera playerCamera;
     public Transform cameraTransform;
     private Transform _target;
 
