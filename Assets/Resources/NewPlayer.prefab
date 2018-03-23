@@ -1143,6 +1143,7 @@ GameObject:
   - component: {fileID: 114919398824866166}
   - component: {fileID: 114510360603820342}
   - component: {fileID: 114138626476327136}
+  - component: {fileID: 114262573612616160}
   m_Layer: 0
   m_Name: NewPlayer
   m_TagString: Player
@@ -2359,6 +2360,20 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!114 &114262573612616160
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1993064174143850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee7ff1f95d869248a3cc806d1d325f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isControllable: 1
+  burp: {fileID: 198881789442526192}
+  startBurp: 0
 --- !u!114 &114510360603820342
 MonoBehaviour:
   m_ObjectHideFlags: 1
