@@ -50,8 +50,6 @@ public class ThirdPersonNetwork : Photon.MonoBehaviour {
 			correctPlayerRot = (Quaternion)stream.ReceiveNext ();
 			specialAbbilities.startBurp = (bool)stream.ReceiveNext ();
 			Debug.Log (specialAbbilities.startBurp);
-			if(specialAbbilities.startBurp)
-				specialAbbilities.MakeBurp ();
 
 			// avoids lerping the character from "center" to the "current" position when this client joins
 			if (firstTake) {
@@ -71,6 +69,8 @@ public class ThirdPersonNetwork : Photon.MonoBehaviour {
 			//Update remote player (smooth this, this looks good, at the cost of some accuracy)
 			transform.position = Vector3.Lerp (transform.position, correctPlayerPos, Time.deltaTime * 5);
 			transform.rotation = Quaternion.Lerp (transform.rotation, correctPlayerRot, Time.deltaTime * 5);
+			if (specialAbbilities.startBurp)
+				specialAbbilities.MakeBurp ();
 		}
 	}
 

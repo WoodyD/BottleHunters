@@ -116,15 +116,14 @@ public class ThirdPersonController : MonoBehaviour {
 			// moveDirection is always normalized, and we only update it if there is user input.
 			if (targetDirection != Vector3.zero) {
 				// If we are really slow, just snap to the target direction
-				if (moveSpeed < walkSpeed * 0.9f && grounded) {
-					moveDirection = targetDirection.normalized;
-				}
+				//if (moveSpeed < walkSpeed * 0.9f && grounded) {
+					//moveDirection = targetDirection.normalized;
+				//}
 				// Otherwise smoothly turn towards it
-				else {
+				//else {
 					moveDirection = Vector3.RotateTowards (moveDirection, targetDirection, rotateSpeed * Mathf.Deg2Rad * Time.deltaTime, 1000);
-
 					moveDirection = moveDirection.normalized;
-				}
+				//}
 			}
 
 			// Smooth the speed based on the current target direction
@@ -161,9 +160,8 @@ public class ThirdPersonController : MonoBehaviour {
 				inAirVelocity += targetDirection.normalized * Time.deltaTime * inAirControlAcceleration;
 		}
 
-
-
 	}
+
 	void ApplyJumping () {
 		// Prevent jumping too fast after each other
 		if (lastJumpTime + jumpRepeatTime > Time.time)
