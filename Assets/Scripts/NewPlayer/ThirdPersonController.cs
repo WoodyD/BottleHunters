@@ -242,7 +242,12 @@ public class ThirdPersonController : MonoBehaviour {
 		velocity = (transform.position - lastPos) * 25;
 
 		if (playerAnimation) {
-			float inputMove = Mathf.Clamp (velocity.sqrMagnitude, 0, 1);
+			float inputMove;
+			if (isMoving)
+				inputMove = 1;
+			else
+				inputMove = 0;
+
 			playerAnimation.SetBool ("Jump", false);
 			playerAnimation.SetBool ("Run", false);
 			playerAnimation.SetFloat ("InputV", inputMove);
