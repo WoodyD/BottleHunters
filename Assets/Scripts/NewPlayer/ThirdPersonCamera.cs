@@ -8,7 +8,6 @@ public class ThirdPersonCamera : MonoBehaviour {
 	private Transform _target;
 
 	// The distance in the x-z plane to the target
-
 	public float distance = 7.0f;
 
 	// the height we want the camera to be above the target
