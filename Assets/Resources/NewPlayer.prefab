@@ -2372,9 +2372,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ee7ff1f95d869248a3cc806d1d325f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isControllable: 1
   burp: {fileID: 198881789442526192}
-  startBurp: 0
+  isControllable: 1
+  attackWithBurp:
+    startBurp: 0
 --- !u!114 &114510360603820342
 MonoBehaviour:
   m_ObjectHideFlags: 1
