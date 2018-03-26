@@ -12,19 +12,20 @@ public class PlayerSpecialAbbilities : Photon.MonoBehaviour {
 
 	public bool isControllable = true;
 	public Attack attackWithBurp;
-
-	private void OnEnable() {
-		PhotonNetwork.OnEventCall += this.CustomBurpEvent;
+	
+	private void OnEnable() {		
+		//PhotonNetwork.OnEventCall += this.CustomBurpEvent;
 	}
 
 	private void OnDisable() {
-		PhotonNetwork.OnEventCall -= this.CustomBurpEvent;
+		//PhotonNetwork.OnEventCall -= this.CustomBurpEvent;
 	}
 	
 	private void Update () {
 		if (isControllable)
 			if (Input.GetKeyDown(KeyCode.E))
-				OnStartBurp();
+				this.photonView.RPC("TryBurp", PhotonTargets.All);
+			//OnStartBurp();
 		//		attackWithBurp.TryBurp();
 		//}else{
 		//	Debug.Log("IsControllable by other player. Start burp? " + attackWithBurp.startBurp);
@@ -34,12 +35,12 @@ public class PlayerSpecialAbbilities : Photon.MonoBehaviour {
 		//}
 	}
 
-	private void OnStartBurp(){
-		TryBurp();
-		byte evCode = 0;
-		bool reliable = true;
-		PhotonNetwork.RaiseEvent(evCode, attackWithBurp, reliable, null);
-	}
+	//private void OnStartBurp(){
+	//	TryBurp();
+	//	byte evCode = 0;
+	//	bool reliable = true;
+	//	PhotonNetwork.RaiseEvent(evCode, attackWithBurp, reliable, null);
+	//}
 	
 	private void CustomBurpEvent(byte eventCode, object content, int senderId) {
 		if(eventCode == 0){
@@ -49,6 +50,7 @@ public class PlayerSpecialAbbilities : Photon.MonoBehaviour {
 		}
 	}
 	
+	[PunRPC]
 	public void TryBurp() {
 		if (burp && !burp.isPlaying) {
 			attackWithBurp.startBurp = true;
