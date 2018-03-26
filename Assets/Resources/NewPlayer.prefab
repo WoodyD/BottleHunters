@@ -2374,8 +2374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   burp: {fileID: 198881789442526192}
   isControllable: 1
-  attackWithBurp:
-    startBurp: 0
+  startBurp: 0
 --- !u!114 &114510360603820342
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2421,10 +2420,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 0}
   cameraTransform: {fileID: 4920264700570230}
-  distance: 5
+  distance: 3
   height: 2
   angularSmoothLag: 0.3
-  angularMaxSpeed: 15
+  angularMaxSpeed: 5
   heightSmoothLag: 0.3
   snapSmoothLag: 0.2
   snapMaxSpeed: 720

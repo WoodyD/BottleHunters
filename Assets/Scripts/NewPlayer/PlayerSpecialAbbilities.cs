@@ -10,8 +10,10 @@ public class Attack{
 public class PlayerSpecialAbbilities : Photon.MonoBehaviour {
 	public ParticleSystem burp;
 
+	
 	public bool isControllable = true;
 	public Attack attackWithBurp;
+	public bool startBurp;
 	
 	private void OnEnable() {		
 		//PhotonNetwork.OnEventCall += this.CustomBurpEvent;
@@ -53,13 +55,13 @@ public class PlayerSpecialAbbilities : Photon.MonoBehaviour {
 	[PunRPC]
 	public void TryBurp() {
 		if (burp && !burp.isPlaying) {
-			attackWithBurp.startBurp = true;
+			startBurp = true;
 			MakeBurp();
 		}
 	}
 	
 	public void MakeBurp() {
-		attackWithBurp.startBurp = false;
+		startBurp = false;
 		burp.Play();
 	}
 
