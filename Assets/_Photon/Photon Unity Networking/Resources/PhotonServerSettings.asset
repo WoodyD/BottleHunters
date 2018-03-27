@@ -43,4 +43,5 @@ MonoBehaviour:
   - RequestForPickupTimes
   - TaggedPlayer
   - TryBurp
+  - MakeBurp
   DisableAutoOpenWizard: 1
