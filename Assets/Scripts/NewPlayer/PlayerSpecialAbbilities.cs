@@ -4,11 +4,25 @@ public class PlayerSpecialAbbilities : Photon.MonoBehaviour {
 	public ParticleSystem burp;
 	public bool isControllable = true;
 	//public bool startBurp;
+
+	private JoyButton joyButtonBurp;
+	
+	private void Awake(){
+		//bad way to implement. only for tests
+		joyButtonBurp = FindObjectOfType<JoyButton>();
+	}
 	
 	private void Update () {
 		if (isControllable)
-			if (Input.GetKeyDown(KeyCode.E))
+			if (GetBurpButton())
 				TryBurp();
+	}
+
+	private bool GetBurpButton() {
+		if (Input.GetKeyDown(KeyCode.E) || joyButtonBurp.Pressed)
+			return true;
+		else
+			return false;
 	}
 	
 	private void TryBurp() {
