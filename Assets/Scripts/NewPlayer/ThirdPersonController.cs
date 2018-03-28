@@ -11,6 +11,7 @@ public enum CharacterState {
 public class ThirdPersonController : MonoBehaviour {
 
 	private Animator playerAnimation;
+	private Joystick joystickMove;
 	public CharacterState _characterState;
 
 	// The speed when walking
@@ -72,6 +73,7 @@ public class ThirdPersonController : MonoBehaviour {
 	void Awake () {
 		moveDirection = transform.TransformDirection (Vector3.forward);
 		playerAnimation = GetComponent<Animator> ();
+		joystickMove = FindObjectOfType<Joystick>();
 	}
 
 	private Vector3 lastPos;
@@ -89,8 +91,8 @@ public class ThirdPersonController : MonoBehaviour {
 		// Always orthogonal to the forward vector
 		Vector3 right = new Vector3 (forward.z, 0, -forward.x);
 
-		float v = Input.GetAxisRaw ("Vertical");
-		float h = Input.GetAxisRaw ("Horizontal");
+		float v = GetVerticalInput();
+		float h = GetHorizontalInput();
 
 		// Are we moving backwards or looking backwards
 		if (v < -0.2f)
@@ -162,6 +164,17 @@ public class ThirdPersonController : MonoBehaviour {
 
 	}
 
+	private float GetVerticalInput(){
+		float verticalInput = (Mathf.Abs(joystickMove.Vertical) > 0.1f) ? joystickMove.Vertical : Input.GetAxisRaw("Vertical");
+		return verticalInput;
+			
+	}
+	private float GetHorizontalInput(){
+		float horizontalInput = (Mathf.Abs(joystickMove.Horizontal) > 0.1f) ? joystickMove.Horizontal : Input.GetAxisRaw("Horizontal");
+		return horizontalInput;
+	}
+	
+	
 	void ApplyJumping () {
 		// Prevent jumping too fast after each other
 		if (lastJumpTime + jumpRepeatTime > Time.time)
@@ -287,7 +300,7 @@ public class ThirdPersonController : MonoBehaviour {
 		if (hit.moveDirection.y > 0.01f)
 			return;
 	}
-
+	
 	public float GetSpeed () {
 		return moveSpeed;
 	}
