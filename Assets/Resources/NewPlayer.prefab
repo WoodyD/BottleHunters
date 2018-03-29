@@ -1203,7 +1203,7 @@ Transform:
   m_GameObject: {fileID: 1865599527087458}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.006, y: 0.066, z: -0.058}
-  m_LocalScale: {x: 1, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4296241429237180}
   m_RootOrder: 0
@@ -2357,8 +2357,8 @@ MonoBehaviour:
   - {fileID: 114510360603820342}
   - {fileID: 114262573612616160}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 1
+  instantiationId: 1
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114262573612616160
@@ -2374,7 +2374,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   burp: {fileID: 198881789442526192}
   isControllable: 1
-  startBurp: 0
 --- !u!114 &114510360603820342
 MonoBehaviour:
   m_ObjectHideFlags: 1

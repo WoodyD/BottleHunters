@@ -52,7 +52,7 @@ public class ThirdPersonController : MonoBehaviour {
 	// Are we jumping? (Initiated with jump button and not grounded yet)
 	private bool jumping = false;
 	private bool jumpingReachedApex = false;
-
+	
 	// Are we moving backwards (This locks the camera to not do a 180 degree spin)
 	private bool movingBack = false;
 	// Is the user pressing any keys?
@@ -69,6 +69,7 @@ public class ThirdPersonController : MonoBehaviour {
 
 	private float lastGroundedTime = 0.0f;
 	public bool isControllable = true;
+	private bool joystickRun;
 
 	void Awake () {
 		moveDirection = transform.TransformDirection (Vector3.forward);
@@ -138,7 +139,7 @@ public class ThirdPersonController : MonoBehaviour {
 			_characterState = CharacterState.Idle;
 
 			// Pick speed modifier
-			if (Input.GetKey (KeyCode.LeftShift) | Input.GetKey (KeyCode.RightShift)) {
+			if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift) || joystickRun) {
 				targetSpeed *= runSpeed;
 				_characterState = CharacterState.Running;
 			} else {
@@ -163,14 +164,30 @@ public class ThirdPersonController : MonoBehaviour {
 		}
 
 	}
-
+	
+	
+	
 	private float GetVerticalInput(){
-		float verticalInput = (Mathf.Abs(joystickMove.Vertical) > 0.1f) ? joystickMove.Vertical : Input.GetAxisRaw("Vertical");
+		float verticalInput;
+		if(Mathf.Abs(joystickMove.Vertical) > 0.1f){
+			verticalInput = joystickMove.Vertical;
+			joystickRun = true;
+		}else{
+			verticalInput = Input.GetAxisRaw("Vertical");
+			joystickRun = false;
+		}		
 		return verticalInput;
 			
 	}
 	private float GetHorizontalInput(){
-		float horizontalInput = (Mathf.Abs(joystickMove.Horizontal) > 0.1f) ? joystickMove.Horizontal : Input.GetAxisRaw("Horizontal");
+		float horizontalInput;
+		if (Mathf.Abs(joystickMove.Horizontal) > 0.1f) {
+			horizontalInput = joystickMove.Horizontal;
+			//joystickRun = true;
+		} else {
+			horizontalInput = Input.GetAxisRaw("Horizontal");
+			//joystickRun = false;
+		}
 		return horizontalInput;
 	}
 	
