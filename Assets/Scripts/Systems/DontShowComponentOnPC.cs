@@ -2,10 +2,11 @@
 
 public class DontShowComponentOnPC : MonoBehaviour {
 
-#if UNITY_STANDALONE
 	void Awake() {
+#if UNITY_STANDALONE
 		gameObject.SetActive(false);
-	}
+#else
+		gameObject.SetActive(true);
 #endif
-
+	}
 }
