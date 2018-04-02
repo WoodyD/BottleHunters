@@ -52,7 +52,7 @@ public class ThirdPersonController : MonoBehaviour {
 	// Are we jumping? (Initiated with jump button and not grounded yet)
 	private bool jumping = false;
 	private bool jumpingReachedApex = false;
-	
+
 	// Are we moving backwards (This locks the camera to not do a 180 degree spin)
 	private bool movingBack = false;
 	// Is the user pressing any keys?
@@ -72,39 +72,51 @@ public class ThirdPersonController : MonoBehaviour {
 	private bool isJoystickEnable;
 	private bool joystickRun;
 
-	void Awake () {
-		moveDirection = transform.TransformDirection (Vector3.forward);
-		playerAnimation = GetComponent<Animator> ();
+	void Awake() {
+		moveDirection = transform.TransformDirection(Vector3.forward);
+		playerAnimation = GetComponent<Animator>();
 		joystickMove = FindObjectOfType<Joystick>();
 		isJoystickEnable = joystickMove && joystickMove.gameObject.activeInHierarchy;
 	}
 
 	private Vector3 lastPos;
+	float backwardMoveTimer = 3f;
 
-	void UpdateSmoothedMovementDirection () {
+	void UpdateSmoothedMovementDirection() {
 		Transform cameraTransform = Camera.main.transform;
-		bool grounded = IsGrounded ();
+		bool grounded = IsGrounded();
 
 		// Forward vector relative to the camera along the x-z plane	
-		Vector3 forward = cameraTransform.TransformDirection (Vector3.forward);
+		Vector3 forward = cameraTransform.TransformDirection(Vector3.forward);
 		forward.y = 0;
 		forward = forward.normalized;
 
 		// Right vector relative to the camera
 		// Always orthogonal to the forward vector
-		Vector3 right = new Vector3 (forward.z, 0, -forward.x);
+		Vector3 right = new Vector3(forward.z, 0, -forward.x);
 
 		float v = GetVerticalInput();
 		float h = GetHorizontalInput();
 
 		// Are we moving backwards or looking backwards
-		if (v < -0.2f)
+		if (v < -0.2f) {
 			movingBack = true;
-		else
+		} else {
 			movingBack = false;
-
+		}
+		//if (v < -0.2f && backwardMoveTimer < 0f) {
+		//	backwardMoveTimer = 3f;
+		//	movingBack = true;
+		//} else {
+		//	backwardMoveTimer -= Time.deltaTime;
+		//	movingBack = false;
+		//}
+		
+		
+		
+		Debug.Log("[ThirdPersonController] moving backward: " + movingBack + " timer: " + backwardMoveTimer);
 		bool wasMoving = isMoving;
-		isMoving = Mathf.Abs (h) > 0.1f || Mathf.Abs (v) > 0.1f;
+		isMoving = Mathf.Abs(h) > 0.1f || Mathf.Abs(v) > 0.1f;
 
 		// Target direction relative to the camera
 		Vector3 targetDirection = h * right + v * forward;
@@ -116,18 +128,15 @@ public class ThirdPersonController : MonoBehaviour {
 			if (isMoving != wasMoving)
 				lockCameraTimer = 0.0f;
 
-			// We store speed and direction seperately,
-			// so that when the character stands still we still have a valid forward direction
-			// moveDirection is always normalized, and we only update it if there is user input.
 			if (targetDirection != Vector3.zero) {
-				// If we are really slow, just snap to the target direction
-				//if (moveSpeed < walkSpeed * 0.9f && grounded) {
-					//moveDirection = targetDirection.normalized;
-				//}
-				// Otherwise smoothly turn towards it
-				//else {
-					moveDirection = Vector3.RotateTowards (moveDirection, targetDirection, rotateSpeed * Mathf.Deg2Rad * Time.deltaTime, 1000);
+				if (!movingBack) {
+					moveDirection = Vector3.RotateTowards(moveDirection, targetDirection, rotateSpeed * Mathf.Deg2Rad * Time.deltaTime, 1000);
 					moveDirection = moveDirection.normalized;
+				} 
+				//else{
+				//	moveDirection += 180f * Vector3.forward;
+				//	moveDirection = Vector3.RotateTowards(moveDirection, targetDirection, rotateSpeed * Mathf.Deg2Rad * Time.deltaTime, 1000);
+				//	moveDirection = moveDirection.normalized;
 				//}
 			}
 
@@ -136,12 +145,12 @@ public class ThirdPersonController : MonoBehaviour {
 
 			// Choose target speed
 			//* We want to support analog input but make sure you cant walk faster diagonally than just forward or sideways
-			float targetSpeed = Mathf.Min (targetDirection.magnitude, 1.0f);
+			float targetSpeed = Mathf.Min(targetDirection.magnitude, 1.0f);
 
 			_characterState = CharacterState.Idle;
 
 			// Pick speed modifier
-			if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift) || joystickRun) {
+			if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) || joystickRun) {
 				targetSpeed *= runSpeed;
 				_characterState = CharacterState.Running;
 			} else {
@@ -149,7 +158,7 @@ public class ThirdPersonController : MonoBehaviour {
 				_characterState = CharacterState.Walking;
 			}
 
-			moveSpeed = Mathf.Lerp (moveSpeed, targetSpeed, curSmooth);
+			moveSpeed = Mathf.Lerp(moveSpeed, targetSpeed, curSmooth);
 
 			// Reset walk time start when we slow down
 			if (moveSpeed < walkSpeed * 0.3f)
@@ -165,21 +174,21 @@ public class ThirdPersonController : MonoBehaviour {
 				inAirVelocity += targetDirection.normalized * Time.deltaTime * inAirControlAcceleration;
 		}
 
-	}	
-	
-	private float GetVerticalInput(){
+	}
+
+	private float GetVerticalInput() {
 		float verticalInput;
-		if(isJoystickEnable && Mathf.Abs(joystickMove.Vertical) > 0.1f){
+		if (isJoystickEnable && Mathf.Abs(joystickMove.Vertical) > 0.1f) {
 			verticalInput = joystickMove.Vertical;
 			joystickRun = true;
-		}else{
+		} else {
 			verticalInput = Input.GetAxisRaw("Vertical");
 			joystickRun = false;
-		}		
+		}
 		return verticalInput;
-			
+
 	}
-	private float GetHorizontalInput(){
+	private float GetHorizontalInput() {
 		float horizontalInput;
 		if (isJoystickEnable && Mathf.Abs(joystickMove.Horizontal) > 0.1f) {
 			horizontalInput = joystickMove.Horizontal;
@@ -188,25 +197,25 @@ public class ThirdPersonController : MonoBehaviour {
 		}
 		return horizontalInput;
 	}
-	
-	
-	void ApplyJumping () {
+
+
+	void ApplyJumping() {
 		// Prevent jumping too fast after each other
 		if (lastJumpTime + jumpRepeatTime > Time.time)
 			return;
 
-		if (IsGrounded ()) {
+		if (IsGrounded()) {
 			// Jump
 			// - Only when pressing the button down
 			// - With a timeout so you can press the button slightly before landing		
 			if (canJump && Time.time < lastJumpButtonTime + jumpTimeout) {
-				verticalSpeed = CalculateJumpVerticalSpeed (jumpHeight);
-				SendMessage ("DidJump", SendMessageOptions.DontRequireReceiver);
+				verticalSpeed = CalculateJumpVerticalSpeed(jumpHeight);
+				SendMessage("DidJump", SendMessageOptions.DontRequireReceiver);
 			}
 		}
 	}
 
-	void ApplyGravity () {
+	void ApplyGravity() {
 		if (isControllable) // don't move player at all if not controllable.
 		{
 			// Apply gravity
@@ -215,23 +224,23 @@ public class ThirdPersonController : MonoBehaviour {
 			// When we reach the apex of the jump we send out a message
 			if (jumping && !jumpingReachedApex && verticalSpeed <= 0.0f) {
 				jumpingReachedApex = true;
-				SendMessage ("DidJumpReachApex", SendMessageOptions.DontRequireReceiver);
+				SendMessage("DidJumpReachApex", SendMessageOptions.DontRequireReceiver);
 			}
 
-			if (IsGrounded ())
+			if (IsGrounded())
 				verticalSpeed = 0.0f;
 			else
 				verticalSpeed -= gravity * Time.deltaTime;
 		}
 	}
 
-	float CalculateJumpVerticalSpeed (float targetJumpHeight) {
+	float CalculateJumpVerticalSpeed(float targetJumpHeight) {
 		// From the jump height and gravity we deduce the upwards speed 
 		// for the character to reach at the apex.
-		return Mathf.Sqrt (2 * targetJumpHeight * gravity);
+		return Mathf.Sqrt(2 * targetJumpHeight * gravity);
 	}
 
-	void DidJump () {
+	void DidJump() {
 		jumping = true;
 		jumpingReachedApex = false;
 		lastJumpTime = Time.time;
@@ -243,50 +252,50 @@ public class ThirdPersonController : MonoBehaviour {
 
 	Vector3 velocity = Vector3.zero;
 
-	void Update () {
+	void Update() {
 		if (isControllable) {
-			if (Input.GetButtonDown ("Jump")) {
+			if (Input.GetButtonDown("Jump")) {
 				lastJumpButtonTime = Time.time;
 			}
 
-			UpdateSmoothedMovementDirection ();
+			UpdateSmoothedMovementDirection();
 
 			// Apply gravity
 			// - extra power jump modifies gravity
 			// - controlledDescent mode modifies gravity
-			ApplyGravity ();
+			ApplyGravity();
 
 			// Apply jumping logic
-			ApplyJumping ();
+			ApplyJumping();
 
 			// Calculate actual motion
-			Vector3 movement = moveDirection * moveSpeed + new Vector3 (0, verticalSpeed, 0) + inAirVelocity;
+			Vector3 movement = moveDirection * moveSpeed + new Vector3(0, verticalSpeed, 0) + inAirVelocity;
 			movement *= Time.deltaTime;
 
 			// Move the controller
-			CharacterController controller = GetComponent<CharacterController> ();
-			collisionFlags = controller.Move (movement);
+			CharacterController controller = GetComponent<CharacterController>();
+			collisionFlags = controller.Move(movement);
 		}
 		velocity = (transform.position - lastPos) * 25;
 
 		if (playerAnimation) {
-			float inputMove = Mathf.Clamp (velocity.sqrMagnitude, 0, 1);
-			playerAnimation.SetBool ("Jump", false);
-			playerAnimation.SetBool ("Run", false);
-			playerAnimation.SetFloat ("InputV", inputMove);
+			float inputMove = Mathf.Clamp(velocity.sqrMagnitude, 0, 1);
+			playerAnimation.SetBool("Jump", false);
+			playerAnimation.SetBool("Run", false);
+			playerAnimation.SetFloat("InputV", inputMove);
 
 			if (_characterState == CharacterState.Jumping) {
-				if (IsGrounded ()) {
+				if (IsGrounded()) {
 					//playerAnimation.SetBool("Jump", true);
 				}
 			} else if (_characterState == CharacterState.Running) {
-				playerAnimation.SetBool ("Run", true);
+				playerAnimation.SetBool("Run", true);
 			}
 		}
 
 		// Set rotation to the move direction
-		if (IsGrounded ()) {
-			transform.rotation = Quaternion.LookRotation (moveDirection);
+		if (IsGrounded()) {
+			transform.rotation = Quaternion.LookRotation(moveDirection);
 		} else {
 			/* This causes choppy behaviour when colliding with SIDES
              * Vector3 xzMove = velocity;
@@ -298,63 +307,50 @@ public class ThirdPersonController : MonoBehaviour {
 		}
 
 		// We are in jump mode but just became grounded
-		if (IsGrounded ()) {
+		if (IsGrounded()) {
 			lastGroundedTime = Time.time;
 			inAirVelocity = Vector3.zero;
 			if (jumping) {
 				jumping = false;
-				SendMessage ("DidLand", SendMessageOptions.DontRequireReceiver);
+				SendMessage("DidLand", SendMessageOptions.DontRequireReceiver);
 			}
 		}
 
 		lastPos = transform.position;
 	}
 
-	void OnControllerColliderHit (ControllerColliderHit hit) {
+	void OnControllerColliderHit(ControllerColliderHit hit) {
 		//	Debug.DrawRay(hit.point, hit.normal);
 		if (hit.moveDirection.y > 0.01f)
 			return;
 	}
-	
-	public float GetSpeed () {
+
+	public float GetSpeed() {
 		return moveSpeed;
 	}
 
-	public bool IsJumping () {
+	public bool IsJumping() {
 		return jumping;
 	}
 
-	public bool IsGrounded () {
+	public bool IsGrounded() {
 		return (collisionFlags & CollisionFlags.CollidedBelow) != 0;
 	}
 
-	public Vector3 GetDirection () {
+	public Vector3 GetDirection() {
 		return moveDirection;
 	}
 
-	public bool IsMovingBackwards () {
+	public bool IsMovingBackwards() {
 		return movingBack;
 	}
 
-	public float GetLockCameraTimer () {
+	public float GetLockCameraTimer() {
 		return lockCameraTimer;
 	}
 
-	public bool IsMoving () {
-		return Mathf.Abs (Input.GetAxisRaw ("Vertical")) + Mathf.Abs (Input.GetAxisRaw ("Horizontal")) > 0.5f;
+	public bool IsMoving() {
+		return Mathf.Abs(Input.GetAxisRaw("Vertical")) + Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.5f;
 	}
-
-	public bool HasJumpReachedApex () {
-		return jumpingReachedApex;
-	}
-
-	public bool IsGroundedWithTimeout () {
-		return lastGroundedTime + groundedTimeout > Time.time;
-	}
-
-	public void Reset () {
-		gameObject.tag = "Player";
-	}
-
 
 }

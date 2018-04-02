@@ -71,7 +71,6 @@ public class ThirdPersonCamera : MonoBehaviour {
 	float AngleDistance (float a, float b) {
 		a = Mathf.Repeat (a, 360);
 		b = Mathf.Repeat (b, 360);
-
 		return Mathf.Abs (b - a);
 	}
 
