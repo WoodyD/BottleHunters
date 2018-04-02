@@ -69,12 +69,14 @@ public class ThirdPersonController : MonoBehaviour {
 
 	private float lastGroundedTime = 0.0f;
 	public bool isControllable = true;
+	private bool isJoystickEnable;
 	private bool joystickRun;
 
 	void Awake () {
 		moveDirection = transform.TransformDirection (Vector3.forward);
 		playerAnimation = GetComponent<Animator> ();
 		joystickMove = FindObjectOfType<Joystick>();
+		isJoystickEnable = joystickMove && joystickMove.gameObject.activeInHierarchy;
 	}
 
 	private Vector3 lastPos;
@@ -163,13 +165,11 @@ public class ThirdPersonController : MonoBehaviour {
 				inAirVelocity += targetDirection.normalized * Time.deltaTime * inAirControlAcceleration;
 		}
 
-	}
-	
-	
+	}	
 	
 	private float GetVerticalInput(){
 		float verticalInput;
-		if(Mathf.Abs(joystickMove.Vertical) > 0.1f){
+		if(isJoystickEnable && Mathf.Abs(joystickMove.Vertical) > 0.1f){
 			verticalInput = joystickMove.Vertical;
 			joystickRun = true;
 		}else{
@@ -181,12 +181,10 @@ public class ThirdPersonController : MonoBehaviour {
 	}
 	private float GetHorizontalInput(){
 		float horizontalInput;
-		if (Mathf.Abs(joystickMove.Horizontal) > 0.1f) {
+		if (isJoystickEnable && Mathf.Abs(joystickMove.Horizontal) > 0.1f) {
 			horizontalInput = joystickMove.Horizontal;
-			//joystickRun = true;
 		} else {
 			horizontalInput = Input.GetAxisRaw("Horizontal");
-			//joystickRun = false;
 		}
 		return horizontalInput;
 	}
