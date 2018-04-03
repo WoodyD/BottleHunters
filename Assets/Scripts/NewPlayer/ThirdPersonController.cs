@@ -80,7 +80,6 @@ public class ThirdPersonController : MonoBehaviour {
 	}
 
 	private Vector3 lastPos;
-	float backwardMoveTimer = 3f;
 
 	void UpdateSmoothedMovementDirection() {
 		Transform cameraTransform = Camera.main.transform;
@@ -104,17 +103,7 @@ public class ThirdPersonController : MonoBehaviour {
 		} else {
 			movingBack = false;
 		}
-		//if (v < -0.2f && backwardMoveTimer < 0f) {
-		//	backwardMoveTimer = 3f;
-		//	movingBack = true;
-		//} else {
-		//	backwardMoveTimer -= Time.deltaTime;
-		//	movingBack = false;
-		//}
 		
-		
-		
-		Debug.Log("[ThirdPersonController] moving backward: " + movingBack + " timer: " + backwardMoveTimer);
 		bool wasMoving = isMoving;
 		isMoving = Mathf.Abs(h) > 0.1f || Mathf.Abs(v) > 0.1f;
 
@@ -129,15 +118,8 @@ public class ThirdPersonController : MonoBehaviour {
 				lockCameraTimer = 0.0f;
 
 			if (targetDirection != Vector3.zero) {
-				if (!movingBack) {
-					moveDirection = Vector3.RotateTowards(moveDirection, targetDirection, rotateSpeed * Mathf.Deg2Rad * Time.deltaTime, 1000);
-					moveDirection = moveDirection.normalized;
-				} 
-				//else{
-				//	moveDirection += 180f * Vector3.forward;
-				//	moveDirection = Vector3.RotateTowards(moveDirection, targetDirection, rotateSpeed * Mathf.Deg2Rad * Time.deltaTime, 1000);
-				//	moveDirection = moveDirection.normalized;
-				//}
+				moveDirection = Vector3.RotateTowards(moveDirection, targetDirection, rotateSpeed * Mathf.Deg2Rad * Time.deltaTime, 1000);
+				moveDirection = moveDirection.normalized;
 			}
 
 			// Smooth the speed based on the current target direction
@@ -279,7 +261,9 @@ public class ThirdPersonController : MonoBehaviour {
 		velocity = (transform.position - lastPos) * 25;
 
 		if (playerAnimation) {
+			//for turn we cant use velocity
 			float inputMove = Mathf.Clamp(velocity.sqrMagnitude, 0, 1);
+			
 			playerAnimation.SetBool("Jump", false);
 			playerAnimation.SetBool("Run", false);
 			playerAnimation.SetFloat("InputV", inputMove);
